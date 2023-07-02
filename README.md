@@ -9,29 +9,28 @@ __Carcinoma pos, malignant (1) --> 2__ <br />
 The following steps are performed in this task <br />
 
 1.Preprocessing: <br />
-Loading and preprocessing the HES stained images. As mentioned, cropping may miss target cells, and resizing may change features, so it's recommended to maintain the original image sizes if possible. Normalize the pixel values to a consistent range (e.g., [0, 1]).
-
+Loading and preprocessing the HES stained images. As mentioned, cropping may miss target cells, and resizing may change features, so it's recommended to maintain the original image sizes if possible. Normalize the pixel values to a consistent range (e.g., [0, 1]). <br />
 2. Prepare the labeled data: <br />
-Spliting the labeled dataset (62 images) into training, validation, and test sets, maintaining a balanced class distribution. We have used 80% of the data for training, 10% for validation and remaining 10% for testing.
+Spliting the labeled dataset (62 images) into training, validation, and test sets, maintaining a balanced class distribution. We have used 80% of the data for training, 10% for validation and remaining 10% for testing. <br />
 3. Transfer learning with pretrained models: <br />
-We have used Vgg16, Vgg19 and Resnet50.
-Modifying the last fully connected layer to match the number of classes in your task (3 classes: -1, 0, 1).
-Freezing the weights of the pretrained layers.
+We have used Vgg16, Vgg19 and Resnet50.<br />
+Modifying the last fully connected layer to match the number of classes in your task (3 classes: -1, 0, 1).<br />
+Freezing the weights of the pretrained layers.<br />
 4. Training with labeled data: <br />
-Using the labeled training set to train the modified model, following the steps mentioned earlier.
-5. Pseudo-labeling for unlabeled data:
-Using the trained model to predict labels for the unlabeled images.
-Assigning pseudo-labels to the unlabeled images based on the model's predictions. These pseudo-labels act as proxies for the true labels.
-Combining the labeled training set and the unlabeled data with their pseudo-labels to create a larger training set.
+Using the labeled training set to train the modified model, following the steps mentioned earlier.<br />
+5. Pseudo-labeling for unlabeled data:<br />
+Using the trained model to predict labels for the unlabeled images.<br />
+Assigning pseudo-labels to the unlabeled images based on the model's predictions. These pseudo-labels act as proxies for the true labels.<br />
+Combining the labeled training set and the unlabeled data with their pseudo-labels to create a larger training set.<br />
 6. Semi-supervised learning training: <br />
-Training the model on the combined training set (labeled + pseudo-labeled unlabeled) using appropriate loss functions that take into account both the labeled and unlabeled samples.
-Common techniques for semi-supervised learning include entropy minimization, consistency regularization, or using a combination of supervised and unsupervised losses.
+Training the model on the combined training set (labeled + pseudo-labeled unlabeled) using appropriate loss functions that take into account both the labeled and unlabeled samples.<br />
+Common techniques for semi-supervised learning include entropy minimization, consistency regularization, or using a combination of supervised and unsupervised losses.<br />
 7. Evaluation and fine-tuning: <br />
-Evaluating the trained model on the labeled test set to measure its performance using appropriate evaluation metrics.
-If needed, fine-tune the model by unfreezing and updating some of the pretrained layers while keeping others frozen.
+Evaluating the trained model on the labeled test set to measure its performance using appropriate evaluation metrics.<br />
+If needed, fine-tune the model by unfreezing and updating some of the pretrained layers while keeping others frozen.<br />
 8. Predicting on unlabeled data: <br />
-Using the trained model to predict the class labels of the remaining unlabeled images.
-Applying the same preprocessing steps used during training and pass the unlabeled images through the model to obtain predictions.
+Using the trained model to predict the class labels of the remaining unlabeled images.<br />
+Applying the same preprocessing steps used during training and pass the unlabeled images through the model to obtain predictions.<br />
 <br />
 
 
